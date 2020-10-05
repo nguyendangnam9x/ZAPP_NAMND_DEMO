@@ -1,0 +1,10 @@
+<mvc:View
+	controllerName="namnd.com.vn.ZAPP_NAMND_DEMO.controller.App"
+	xmlns:mvc="sap.ui.core.mvc"
+	displayBlock="true"
+	busy="{appView>/busy}"
+	busyIndicatorDelay="{appView>/delay}"
+	xmlns="sap.m">
+	<!--<SplitApp id="idAppControl" />-->
+	<App id="idAppControl" busy="{appView>/busy}" busyIndicatorDelay="{appView>/delay}"/>
+</mvc:View>
