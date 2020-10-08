@@ -96,12 +96,24 @@
 					"target": [
 						"home"
 					]
+				},
+				{
+					"pattern": "/create",
+					"name": "create",
+					"target": [
+						"create"
+					]
 				}
 			],
 			"targets": {
 				"home": {
 					"viewName": "Home",
 					"viewId": "home",
+					"viewLevel": 2
+				},
+				"create" : {
+					"viewName": "create",
+					"viewId": "create",
 					"viewLevel": 2
 				},
 				"detailObjectNotFound": {

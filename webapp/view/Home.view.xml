@@ -1,22 +1,22 @@
-<mvc:View xmlns="sap.m" xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds" xmlns:viz.data="sap.viz.ui5.data" xmlns:l="sap.ui.layout" xmlns:viz="sap.viz.ui5.controls" xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form" xmlns:semantic="sap.m.semantic" xmlns:footerbar="sap.ushell.ui.footerbar" controllerName="namnd.com.vn.ZAPP_NAMND_DEMO.controller.Home">
-	<semantic:DetailPage id="page" title="Home Page" navButtonPress="onNavBack" showNavButton="{device>/system/phone}" showFooter="false" showSubHeader="false">
+<mvc:View xmlns="sap.m" xmlns:table="sap.ui.table" xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds" xmlns:viz.data="sap.viz.ui5.data"
+	xmlns:l="sap.ui.layout" xmlns:viz="sap.viz.ui5.controls" xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form"
+	xmlns:semantic="sap.m.semantic" xmlns:footerbar="sap.ushell.ui.footerbar" controllerName="namnd.com.vn.ZAPP_NAMND_DEMO.controller.Home">
+	<semantic:DetailPage id="page" title="Home Page" navButtonPress="onNavBack" showNavButton="{device>/system/phone}" showFooter="false"
+		showSubHeader="false">
 		<semantic:content>
-			<!--START My Message - Assign To Me -->
-			<sap.ui.layout:Grid xmlns:sap.ui.layout="sap.ui.layout" id="grid_1" defaultSpan="XL12 L12 M12 S12" width="100%" containerQuery="false" hSpacing="0" position="Center" vSpacing="0.5" visible="true">
+			<sap.ui.layout:Grid xmlns:sap.ui.layout="sap.ui.layout" id="grid_1" defaultSpan="XL12 L12 M12 S12" width="100%" containerQuery="false"
+				hSpacing="0" position="Center" vSpacing="0.5" visible="true">
 				<sap.ui.layout:content>
 					<Bar>
 						<contentLeft>
 							<Label text="Input Information"/>
 						</contentLeft>
 						<contentRight>
-							<Button enabled="true" id="btn_edit" press="onEdit" text="Edit Ticket" type="Emphasized" tooltip="Edit Ticket"/>
-							<Button enabled="true" id="btn_create" press="onCreate" text="{i18n>btn_create_ticket}" type="Emphasized" tooltip="{i18n>btn_create_ticket}"/>
-							<Button enabled="true" id="btn_myticket" press="onMyTicket" text="{i18n>btn_my_ticket}" type="Emphasized" tooltip="{i18n>btn_my_ticket}"/>
+							<!--<Button enabled="true" id="btn_edit" press="onEdit" text="Edit Ticket" type="Emphasized" tooltip="Edit Ticket"/>-->
+							<Button enabled="true" id="btn_create" press="onCreate" text="Create" type="Emphasized" tooltip="Create Employee"/>
+							<!--<Button enabled="true" id="btn_myticket" press="onMyTicket" text="{i18n>btn_my_ticket}" type="Emphasized" tooltip="{i18n>btn_my_ticket}"/>-->
 						</contentRight>
 					</Bar>
-					<Toolbar>
-						<Text id="txtSummaryAssign" text="Result List: 44 Message Found, Last Refresh: 14.10.2019 10:47:09"/>
-					</Toolbar>
 				</sap.ui.layout:content>
 			</sap.ui.layout:Grid>
 			<sap.ui.layout:Grid xmlns:sap.ui.layout="sap.ui.layout" id="grid_content" defaultSpan="XL12 L12 M12 S12" width="100%" containerQuery="false"
@@ -73,66 +73,40 @@
 							<Label text="List Employee"/>
 						</contentLeft>
 						<contentRight>
-							<Button enabled="true" tooltip="Add Ticket" press="onCreate" id="btn_add_ticket" icon="sap-icon://add"/>
-							<Button enabled="true" tooltip="Pie Chart" press="onChartPie" id="btn_chart" icon="sap-icon://pie-chart"/>
-							<Button enabled="true" tooltip="Table Personalization" press="onPersoButtonPressed" id="btn_split" icon="sap-icon://action-settings"/>
+							<!--<Button enabled="true" tooltip="Add Ticket" press="onCreate" id="btn_add_ticket" icon="sap-icon://add"/>-->
+							<!--<Button enabled="true" tooltip="Pie Chart" press="onChartPie" id="btn_chart" icon="sap-icon://pie-chart"/>-->
+							<!--<Button enabled="true" tooltip="Table Personalization" press="onPersoButtonPressed" id="btn_split" icon="sap-icon://action-settings"/>-->
 						</contentRight>
 					</Bar>
 				</sap.ui.layout:content>
 			</sap.ui.layout:Grid>
-			<!--<ScrollContainer height="200px" vertical="true">-->
-				<Table id="table_list_ticket" inset="false" items="{/EmployeeSet}" noDataText="No data" fixedLayout="false" showSeparators="All" growing="false" updateFinished="onUpdateFinishedAlegation" growingThreshold="5" growingScrollToLoad="true">
+			<ScrollContainer height="300px" vertical="true">
+				<Table id="tblEmployee" inset="false" items="{/EmployeeSet}" noDataText="No data" fixedLayout="false" showSeparators="All" growing="false"
+					updateFinished="onUpdateFinishedAlegation" growingThreshold="5" growingScrollToLoad="true">
 					<columns>
-						<Column id="idCol" vAlign="Middle" minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false" visible="true" width="auto">
+						<Column id="idcl" vAlign="Middle" minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false" visible="true"
+							width="auto">
 							<header>
 								<Label text="ID" id="lb_1"/>
 							</header>
 						</Column>
-						<Column id="descriptionCol" vAlign="Middle" minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false" width="auto">
+						<Column id="namecl" vAlign="Middle" minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false" width="auto">
 							<header>
 								<Label text="Name" id="lb_2"/>
 							</header>
 						</Column>
-						<Column id="requestedStartCol" vAlign="Middle" minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false" visible="true" width="auto">
+						<Column id="addresscl" vAlign="Middle" minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false"
+							visible="true" width="auto">
 							<header>
 								<Label text="Address" id="lb_3"/>
 							</header>
 						</Column>
-						<Column id="priorityCol" vAlign="Middle" minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false" width="auto">
+						<Column id="phonecl" vAlign="Middle" minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false" width="auto">
 							<header>
 								<Label text="Phone" id="lb_4"/>
 							</header>
 						</Column>
-						<!--<Column id="transactionTypeCol" vAlign="Middle" minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false"-->
-						<!--	visible="true" width="auto">-->
-						<!--	<header>-->
-						<!--		<Label text="Transaction type" id="lb_5"/>-->
-						<!--	</header>-->
-						<!--</Column>-->
-						<!--<Column id="firstResponseCol" vAlign="Middle" minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false"-->
-						<!--	width="auto">-->
-						<!--	<header>-->
-						<!--		<Label text="First Response" id="lb_6"/>-->
-						<!--	</header>-->
-						<!--</Column>-->
-						<!--<Column id="dueByCol" vAlign="Middle" minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false"-->
-						<!--	visible="true" width="auto">-->
-						<!--	<header>-->
-						<!--		<Label text="Due by" id="lb_7"/>-->
-						<!--	</header>-->
-						<!--</Column>-->
-						<!--<Column id="userStatusCol" vAlign="Middle" minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false"-->
-						<!--	width="auto">-->
-						<!--	<header>-->
-						<!--		<Label text="User status" id="lb_8"/>-->
-						<!--	</header>-->
-						<!--</Column>-->
-						<!--<Column id="personResponsibleCol" vAlign="Middle" minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false"-->
-						<!--	width="auto">-->
-						<!--	<header>-->
-						<!--		<Label text="Person responsible" id="lb_9"/>-->
-						<!--	</header>-->
-						<!--</Column>-->
+						<Column id="choose" width="100px" vAlign="Middle" minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false"/>
 					</columns>
 					<items>
 						<ColumnListItem>
@@ -145,16 +119,67 @@
 								<Text text="{Name}"/>
 								<Text text="{Address}"/>
 								<Text text="{Phone}"/>
-								<!--<Text text="{TransactionType}"/>-->
-								<!--<Text text="{FirstResponseBy}"/>-->
-								<!--<Text text="{DueBy}"/>-->
-								<!--<Text text="{Status}"/>-->
-								<!--<Text text="{MessProcess}"/>-->
+								<HBox justifyContent="Center">
+									<Button press="onDelete" icon="sap-icon://delete" tooltip="Delete">
+										<customData>
+											<core:CustomData key="empid" value="{EmpId}" writeToDom="true"/>
+										</customData>
+									</Button>
+									<Button press="onEdit" class="sapUiTinyMarginBegin" icon="sap-icon://edit" tooltip="Edit">
+										<customData>
+											<core:CustomData key="empid" value="{EmpId}" writeToDom="true"/>
+										</customData>
+									</Button>
+								</HBox>
 							</cells>
 						</ColumnListItem>
 					</items>
 				</Table>
-			<!--</ScrollContainer>-->
+			</ScrollContainer>
+			<table:Table rows="{/EmployeeSet}" id="tblEmployee2" visibleRowCount="7" selectionMode="MultiToggle" ariaLabelledBy="title">
+				<table:extension>
+					<OverflowToolbar>
+						<Title id="title" text="List Employee"/>
+					</OverflowToolbar>
+				</table:extension>
+				<table:columns>
+					<table:Column>
+						<Label text="Name"/>
+						<table:template>
+							<Text text="{Name}" wrapping="false"/>
+						</table:template>
+					</table:Column>
+					<table:Column>
+						<Label text="Address"/>
+						<table:template>
+							<Text text="{Address}" wrapping="false"/>
+						</table:template>
+					</table:Column>
+					<table:Column>
+						<Label text="Phone"/>
+						<table:template>
+							<Text text="{Phone}" wrapping="false"/>
+						</table:template>
+					</table:Column>
+					<table:Column width="100px">
+						<!--<Label text="Phone" />-->
+						<table:template>
+							<HBox justifyContent="Center">
+								<Button icon="sap-icon://delete" press="onDelete">
+									<customData>
+										<core:CustomData key="empid" value="{EmpId}" writeToDom="true"/>
+									</customData>
+								</Button>
+								<Button class="sapUiTinyMarginBegin" icon="sap-icon://edit" press="onEdit">
+									<customData>
+										<core:CustomData key="empid" value="{EmpId}" writeToDom="true"/>
+									</customData>
+								</Button>
+							</HBox>
+						</table:template>
+					</table:Column>
+				</table:columns>
+			</table:Table>
 			<!--<sap.ui.layout:Grid xmlns:sap.ui.layout="sap.ui.layout" id="grid_assign_sizing" defaultSpan="XL12 L12 M12 S12" width="100%"-->
 			<!--	containerQuery="false" hSpacing="0.5" position="Right" vSpacing="0.5" visible="true">-->
 			<!--	<sap.ui.layout:content>-->
@@ -185,32 +210,6 @@
 			<!--				</FlexBox>-->
 			<!--			</contentRight>-->
 			<!--		</Bar>-->
-			<!--	</sap.ui.layout:content>-->
-			<!--</sap.ui.layout:Grid>-->
-			<!--<sap.ui.layout:Grid xmlns:sap.ui.layout="sap.ui.layout" id="grid131" defaultSpan="XL12 L12 M12 S12" width="100%" containerQuery="false"-->
-			<!--	hSpacing="0.5" position="Center" vSpacing="0" visible="true">-->
-			<!--	<sap.ui.layout:content>-->
-			<!--		<viz:VizFrame id="oVizFrame" visible="true" vizProperties="{ title: {text : 'Chart Pie', visible : false}, -->
-			<!--			plotArea:{ dataLabel:{ visible:true }}}"-->
-			<!--			uiConfig="{ 'applicationSet': 'fiori' }" vizType="pie" legendVisible="true" width="100%">-->
-			<!--			<viz:dataset>-->
-			<!--				<viz.data:FlattenedDataset data="{/results}">-->
-			<!--					<viz.data:dimensions>-->
-			<!--						<viz.data:DimensionDefinition name="Status" value="{Status}"/>-->
-			<!--					</viz.data:dimensions>-->
-			<!--					<viz.data:measures>-->
-			<!--						<viz.data:MeasureDefinition name="Count" value="{Count}"/>-->
-			<!--					</viz.data:measures>-->
-			<!--				</viz.data:FlattenedDataset>-->
-			<!--			</viz:dataset>-->
-			<!--			<viz:feeds>-->
-			<!--				<viz.feeds:FeedItem uid="size" type="Measure" values="Count"/>-->
-			<!--				<viz.feeds:FeedItem uid="color" type="Dimension" values="Status"/>-->
-			<!--			</viz:feeds>-->
-			<!--			<viz:layoutData>-->
-			<!--				<l:GridData id="__data43" span="L12 M12 S12"/>-->
-			<!--			</viz:layoutData>-->
-			<!--		</viz:VizFrame>-->
 			<!--	</sap.ui.layout:content>-->
 			<!--</sap.ui.layout:Grid>-->
 		</semantic:content>
