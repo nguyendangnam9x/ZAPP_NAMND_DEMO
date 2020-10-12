@@ -25,6 +25,16 @@
 					<f:SimpleForm class="editableForm" columnsL="2" columnsM="2" editable="true" id="form_information" layout="ResponsiveGridLayout"
 						maxContainerCols="2" minWidth="1024">
 						<f:content>
+							<Label text="Id" labelFor="id">
+								<layoutData>
+									<sap.ui.layout:GridData span="L2 M2"/>
+								</layoutData>
+							</Label>
+							<Input id="id">
+								<layoutData>
+									<sap.ui.layout:GridData span="L4 M4"/>
+								</layoutData>
+							</Input>
 							<Label text="Name" labelFor="name">
 								<layoutData>
 									<sap.ui.layout:GridData span="L2 M2"/>
@@ -57,7 +67,7 @@
 							</Input>
 							<VBox alignItems="End">
 								<layoutData>
-									<sap.ui.layout:GridData span="L6 M6"/>
+									<sap.ui.layout:GridData span="L12 M12"/>
 								</layoutData>
 								<Button text="Search" press="onSearch"/>
 							</VBox>
@@ -136,7 +146,39 @@
 					</items>
 				</Table>
 			</ScrollContainer>
-			<table:Table rows="{/EmployeeSet}" id="tblEmployee2" visibleRowCount="7" selectionMode="MultiToggle" ariaLabelledBy="title">
+			<sap.ui.layout:Grid xmlns:sap.ui.layout="sap.ui.layout" id="grid_assign_sizing" defaultSpan="XL12 L12 M12 S12" width="100%"
+				containerQuery="false" hSpacing="0.5" position="Right" vSpacing="0.5" visible="true">
+				<sap.ui.layout:content>
+					<Bar>
+						<contentMiddle>
+							<Button enabled="false" tooltip="First page" id="btn_first_page" press="onFirstPage" icon="sap-icon://close-command-field"
+								type="Transparent" text="First"/>
+							<Button enabled="false" tooltip="Previous page" id="btn_prev_page" press="onPrevPage" icon="sap-icon://navigation-left-arrow"
+								type="Transparent" text="Back"/>
+							<Button enabled="false" tooltip="Next page" id="btn_next_page" press="onNextPage" icon="sap-icon://navigation-right-arrow"
+								type="Transparent" text="Next" iconFirst="false"/>
+							<Button enabled="false" tooltip="Last page" id="btn_last_page" press="onLastPage" icon="sap-icon://open-command-field" type="Transparent"
+								text="Last" iconFirst="false"/>
+						</contentMiddle>
+						<contentRight>
+							<FlexBox width="auto" id="flb_assign_page_size" direction="Inherit" alignItems="Center" justifyContent="End" wrap="Wrap">
+								<items>
+									<Label text="Maximum Number of Results:" design="Standard" class="sapUiTinyMarginEnd sapUiVisibleOnlyOnDesktop"/>
+									<Select xmlns:sap.ui.core="sap.ui.core" selectedKey="25" id="page_size" forceSelection="false" change="onChangePageSize">
+										<items>
+											<sap.ui.core:ListItem text="25" key="25"/>
+											<sap.ui.core:ListItem text="50" key="50"/>
+											<sap.ui.core:ListItem text="75" key="75"/>
+											<sap.ui.core:ListItem text="100" key="100"/>
+										</items>
+									</Select>
+								</items>
+							</FlexBox>
+						</contentRight>
+					</Bar>
+				</sap.ui.layout:content>
+			</sap.ui.layout:Grid>
+			<table:Table rows="{/EmployeeSet}" id="tblEmployee2" selectionMode="MultiToggle" ariaLabelledBy="title">
 				<table:extension>
 					<OverflowToolbar>
 						<Title id="title" text="List Employee"/>

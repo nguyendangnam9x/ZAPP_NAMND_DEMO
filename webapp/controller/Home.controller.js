@@ -81,8 +81,9 @@ sap.ui.define([
 			this._getDialog().close();
 		},
 		onRefreshTable: function() {
-			this.getView().byId("tblEmployee").getModel().refresh(true);
-			this.getView().byId("tblEmployee2").getModel().refresh(true);
+			this.onSearch();
+			// this.getView().byId("tblEmployee").getModel().refresh(true);
+			// this.getView().byId("tblEmployee2").getModel().refresh(true);
 			// sap.ui.getCore().byId("tblEmployee").getModel().refresh(true);
 		},
 		onDelete: function(oEvent) {
@@ -115,6 +116,57 @@ sap.ui.define([
 				},
 				error: function(oError) {
 					MessageBox.show("Delete Error");
+				}
+			});
+		},
+		onSearch: function() {
+			var that = this;
+			var sUrl = "/sap/opu/odata/sap/ZODATA_NAMND_SRV/";
+			var oDataModel = new sap.ui.model.odata.v2.ODataModel(sUrl, {
+				json: true,
+				loadMetadataAsync: true
+			});
+			
+			var top = 2;
+			var skip = 2;
+			
+			var nameVal = this.getView().byId("name").getValue();
+			var addressVal = this.getView().byId("address").getValue();
+			var phoneVal = this.getView().byId("phone").getValue();
+			var idVal = this.getView().byId("id").getValue();
+			
+			var name = new sap.ui.model.Filter("Name", sap.ui.model.FilterOperator.Contains, nameVal);
+			var address = new sap.ui.model.Filter("Address", sap.ui.model.FilterOperator.Contains, addressVal);
+			var phone = new sap.ui.model.Filter("Phone", sap.ui.model.FilterOperator.Contains, phoneVal);
+			var id = new sap.ui.model.Filter("EmpId", sap.ui.model.FilterOperator.Contains, idVal);
+			
+			oDataModel.read("/EmployeeSet", {
+				filters: [id,name, address, phone],
+				urlParameters: {
+					"$top": top,
+					"$skip": skip
+				},
+				success: function(oData, response) {
+					var oTable = that.getView().byId("tblEmployee");
+					var oJSONModel = new sap.ui.model.json.JSONModel();
+					oJSONModel.setData(oData);
+					oTable.setModel(oJSONModel);
+					oTable.bindItems({
+						path: "/results",
+						template: oTable.getBindingInfo("items").template
+					});
+					var oTable2 = that.getView().byId("tblEmployee2");
+					oTable2.setModel(oJSONModel);
+					oTable2.bindRows({
+						path: "/results",
+						template: oTable.getBindingInfo("items").template
+					});
+					if (oData.results.length <= 0) {
+						// that._disableAllButtonPage();
+					}
+				},
+				error: function(oError) {
+					MessageBox.error(oError.statusText);
 				}
 			});
 		}

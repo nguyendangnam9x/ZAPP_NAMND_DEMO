@@ -111,7 +111,7 @@
 					"viewId": "home",
 					"viewLevel": 2
 				},
-				"create" : {
+				"create": {
 					"viewName": "create",
 					"viewId": "create",
 					"viewLevel": 2
