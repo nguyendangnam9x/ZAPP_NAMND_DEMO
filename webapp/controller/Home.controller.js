@@ -8,8 +8,10 @@ sap.ui.define([
 	"use strict";
 	return BaseController.extend("namnd.com.vn.ZAPP_NAMND_DEMO.controller.Home", {
 		formatter: formatter,
+		pageNumber: 1,
+		pageMax: 0,
 		onInit: function() {
-
+			this._searchEmployee();
 		},
 		onCreate: function() {
 			var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
@@ -119,7 +121,57 @@ sap.ui.define([
 				}
 			});
 		},
-		onSearch: function() {
+		onNextPage: function(OEvent) {
+			this._enableAllButtonPage();
+			this.pageNumber = this.pageNumber + 1;
+			if (this.pageNumber >= this.pageMax) {
+				this.pageNumber = this.pageMax;
+				this.getView().byId("btn_next_page").setEnabled(false);
+				this.getView().byId("btn_last_page").setEnabled(false);
+			}
+			this._searchEmployee();
+		},
+		onPrevPage: function(OEvent) {
+			this._enableAllButtonPage();
+			this.pageNumber = this.pageNumber - 1;
+			if (this.pageNumber <= 1) {
+				this.pageNumber = 1;
+				this.getView().byId("btn_first_page").setEnabled(false);
+				this.getView().byId("btn_prev_page").setEnabled(false);
+			}
+			this._searchEmployee();
+		},
+		onFirstPage: function(OEvent) {
+			this._enableAllButtonPage();
+			this.pageNumber = 1;
+			this.getView().byId("btn_first_page").setEnabled(false);
+			this.getView().byId("btn_prev_page").setEnabled(false);
+			this._searchEmployee();
+		},
+		onLastPage: function(OEvent) {
+			this._enableAllButtonPage();
+			this.pageNumber = this.pageMax;
+			this.getView().byId("btn_last_page").setEnabled(false);
+			this.getView().byId("btn_next_page").setEnabled(false);
+			this._searchEmployee();
+		},
+		_enableAllButtonPage: function() {
+			this._setEnableBtnPgae(true);
+		},
+		_disableAllButtonPage: function() {
+			this._setEnableBtnPgae(false);
+		},
+		_setEnableBtnPgae: function(isEnable) {
+			this.getView().byId("btn_first_page").setEnabled(isEnable);
+			this.getView().byId("btn_prev_page").setEnabled(isEnable);
+			this.getView().byId("btn_next_page").setEnabled(isEnable);
+			this.getView().byId("btn_last_page").setEnabled(isEnable);
+		},
+		onSearch: function(oEvent) {
+			this.pageNumber = 1;
+			this._searchEmployee();
+		},
+		_searchEmployee: function() {
 			var that = this;
 			var sUrl = "/sap/opu/odata/sap/ZODATA_NAMND_SRV/";
 			var oDataModel = new sap.ui.model.odata.v2.ODataModel(sUrl, {
@@ -127,8 +179,8 @@ sap.ui.define([
 				loadMetadataAsync: true
 			});
 			
-			var top = 2;
-			var skip = 2;
+			var top = this.getView().byId("page_size").getSelectedKey();
+			var skip = (this.pageNumber - 1) * top;
 			
 			var nameVal = this.getView().byId("name").getValue();
 			var addressVal = this.getView().byId("address").getValue();
@@ -162,13 +214,69 @@ sap.ui.define([
 						template: oTable.getBindingInfo("items").template
 					});
 					if (oData.results.length <= 0) {
-						// that._disableAllButtonPage();
+						that._disableAllButtonPage();
 					}
 				},
 				error: function(oError) {
 					MessageBox.error(oError.statusText);
 				}
 			});
+		},
+		_totalEmployee: function() {
+			var that = this;
+			var sUrl = "/sap/opu/odata/sap/ZODATA_NAMND_SRV/";
+			var oDataModel = new sap.ui.model.odata.v2.ODataModel(sUrl, {
+				json: true,
+				loadMetadataAsync: true
+			});
+			
+			var nameVal = this.getView().byId("name").getValue();
+			var addressVal = this.getView().byId("address").getValue();
+			var phoneVal = this.getView().byId("phone").getValue();
+			var idVal = this.getView().byId("id").getValue();
+			
+			var name = new sap.ui.model.Filter("Name", sap.ui.model.FilterOperator.Contains, nameVal);
+			var address = new sap.ui.model.Filter("Address", sap.ui.model.FilterOperator.Contains, addressVal);
+			var phone = new sap.ui.model.Filter("Phone", sap.ui.model.FilterOperator.Contains, phoneVal);
+			var id = new sap.ui.model.Filter("EmpId", sap.ui.model.FilterOperator.Contains, idVal);
+			
+			oDataModel.read("/CountItemSet", {
+				filters: [id,name, address, phone],
+				success: function(oData, response) {
+					that._setTotalCount(oData.results);
+				},
+				error: function(oError) {
+					MessageBox.error(oError.statusText);
+				}
+			});
+		},
+		onUpdateFinishedAlegation: function(OEvent) {
+			this._totalEmployee();
+		},
+		_setTotalCount: function(results) {
+			var top = this.getView().byId("page_size").getSelectedKey();
+			for (var i = 0; i < results.length; i++) {
+				this.totalRecord = results[i].TotalItem;
+			}
+			var pageSize = this.getView().byId("page_size").getSelectedKey();
+			this.pageMax = Math.ceil(this.totalRecord / pageSize);
+			this._initBtnNextLast(top);
+		},
+		_initBtnNextLast: function(top) {
+			if (this.pageNumber === 1 && top < this.totalRecord) {
+				this.getView().byId("btn_next_page").setEnabled(true);
+				this.getView().byId("btn_last_page").setEnabled(true);
+				this.getView().byId("btn_prev_page").setEnabled(false);
+				this.getView().byId("btn_first_page").setEnabled(false);
+			} else if (this.pageNumber === 1 && top >= this.totalRecord) {
+				this.getView().byId("btn_next_page").setEnabled(false);
+				this.getView().byId("btn_last_page").setEnabled(false);
+				this.getView().byId("btn_prev_page").setEnabled(false);
+				this.getView().byId("btn_first_page").setEnabled(false);
+			}
+		},
+		onChangePageSize: function(oEvent) {
+			this.onSearch();
 		}
 	});
 });

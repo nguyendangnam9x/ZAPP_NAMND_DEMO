@@ -164,12 +164,12 @@
 							<FlexBox width="auto" id="flb_assign_page_size" direction="Inherit" alignItems="Center" justifyContent="End" wrap="Wrap">
 								<items>
 									<Label text="Maximum Number of Results:" design="Standard" class="sapUiTinyMarginEnd sapUiVisibleOnlyOnDesktop"/>
-									<Select xmlns:sap.ui.core="sap.ui.core" selectedKey="25" id="page_size" forceSelection="false" change="onChangePageSize">
+									<Select xmlns:sap.ui.core="sap.ui.core" selectedKey="5" id="page_size" forceSelection="false" change="onChangePageSize">
 										<items>
-											<sap.ui.core:ListItem text="25" key="25"/>
-											<sap.ui.core:ListItem text="50" key="50"/>
-											<sap.ui.core:ListItem text="75" key="75"/>
-											<sap.ui.core:ListItem text="100" key="100"/>
+											<sap.ui.core:ListItem text="5" key="5"/>
+											<sap.ui.core:ListItem text="10" key="10"/>
+											<sap.ui.core:ListItem text="15" key="15"/>
+											<sap.ui.core:ListItem text="20" key="20"/>
 										</items>
 									</Select>
 								</items>
@@ -178,7 +178,7 @@
 					</Bar>
 				</sap.ui.layout:content>
 			</sap.ui.layout:Grid>
-			<table:Table rows="{/EmployeeSet}" id="tblEmployee2" selectionMode="MultiToggle" ariaLabelledBy="title">
+			<table:Table rows="{/EmployeeSet}" updateFinished="onUpdateFinishedAlegation" id="tblEmployee2" selectionMode="MultiToggle" ariaLabelledBy="title">
 				<table:extension>
 					<OverflowToolbar>
 						<Title id="title" text="List Employee"/>
@@ -222,38 +222,6 @@
 					</table:Column>
 				</table:columns>
 			</table:Table>
-			<!--<sap.ui.layout:Grid xmlns:sap.ui.layout="sap.ui.layout" id="grid_assign_sizing" defaultSpan="XL12 L12 M12 S12" width="100%"-->
-			<!--	containerQuery="false" hSpacing="0.5" position="Right" vSpacing="0.5" visible="true">-->
-			<!--	<sap.ui.layout:content>-->
-			<!--		<Bar>-->
-			<!--			<contentMiddle>-->
-			<!--				<Button enabled="false" tooltip="First page" id="btn_first_page" press="onFirstPage" icon="sap-icon://close-command-field"-->
-			<!--					type="Transparent" text="First"/>-->
-			<!--				<Button enabled="false" tooltip="Previous page" id="btn_prev_page" press="onPrevPage" icon="sap-icon://navigation-left-arrow"-->
-			<!--					type="Transparent" text="Back"/>-->
-			<!--				<Button enabled="false" tooltip="Next page" id="btn_next_page" press="onNextPage" icon="sap-icon://navigation-right-arrow"-->
-			<!--					type="Transparent" text="Next" iconFirst="false"/>-->
-			<!--				<Button enabled="false" tooltip="Last page" id="btn_last_page" press="onLastPage" icon="sap-icon://open-command-field" type="Transparent"-->
-			<!--					text="Last" iconFirst="false"/>-->
-			<!--			</contentMiddle>-->
-			<!--			<contentRight>-->
-			<!--				<FlexBox width="auto" id="flb_assign_page_size" direction="Inherit" alignItems="Center" justifyContent="End" wrap="Wrap">-->
-			<!--					<items>-->
-			<!--						<Label text="Maximum Number of Results:" design="Standard" class="sapUiTinyMarginEnd sapUiVisibleOnlyOnDesktop"/>-->
-			<!--						<Select xmlns:sap.ui.core="sap.ui.core" selectedKey="25" id="page_size" forceSelection="false" change="onChangePageSize">-->
-			<!--							<items>-->
-			<!--								<sap.ui.core:ListItem text="25" key="25"/>-->
-			<!--								<sap.ui.core:ListItem text="50" key="50"/>-->
-			<!--								<sap.ui.core:ListItem text="75" key="75"/>-->
-			<!--								<sap.ui.core:ListItem text="100" key="100"/>-->
-			<!--							</items>-->
-			<!--						</Select>-->
-			<!--					</items>-->
-			<!--				</FlexBox>-->
-			<!--			</contentRight>-->
-			<!--		</Bar>-->
-			<!--	</sap.ui.layout:content>-->
-			<!--</sap.ui.layout:Grid>-->
 		</semantic:content>
 	</semantic:DetailPage>
 </mvc:View>
